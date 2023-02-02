@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
+import {ThemeService} from "../theme.service";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,8 @@ import {AuthenticationService} from "../authentication.service";
 })
 export class HeaderComponent {
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService,
+              private themeService: ThemeService) {
 
   }
 
@@ -20,5 +22,11 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
+  toggleTheme() {
+    this.themeService.toggle_theme()
+  }
+  isDarkTheme() {
+    return this.themeService.theme == 'dark'
+  }
 
 }
