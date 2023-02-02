@@ -1,9 +1,9 @@
 
 <div class="container">
-  <form>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
     <div class="form-floating bg-body-emphasis">
-      <textarea class="form-control" placeholder="Write your post here" id="postText" style="height: 400px"></textarea>
+      <textarea name="post_text" ngModel class="form-control" placeholder="Write your post here" id="postText" style="height: 400px"></textarea>
       <label for="postText">Post</label>
     </div>
 
