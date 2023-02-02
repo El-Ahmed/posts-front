@@ -7,6 +7,7 @@ import { PostComponent } from './post/post.component';
 import { SignComponent } from './sign/sign.component';
 import { CreateComponent } from './create/create.component';
 import { PostsComponent } from './posts/posts.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PostsComponent } from './posts/posts.component';
     PostComponent,
     SignComponent,
     CreateComponent,
-    PostsComponent
+    PostsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
