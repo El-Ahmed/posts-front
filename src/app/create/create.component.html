@@ -1,0 +1,19 @@
+
+<div class="container pt-5">
+  <form>
+
+    <div class="form-floating bg-body-emphasis">
+      <textarea class="form-control" placeholder="Write your post here" id="postText" style="height: 400px"></textarea>
+      <label for="postText">Post</label>
+    </div>
+
+    <blockquote class="blockquote mt-3">
+      <footer class="blockquote-footer text-end">by <cite [title]="username"><a [routerLink]="'/posts/'+username">{{username}}</a></cite></footer>
+    </blockquote>
+
+    <div >
+      <button type="submit" class="btn btn-primary mt-1">Post it</button>
+    </div>
+
+  </form>
+</div>

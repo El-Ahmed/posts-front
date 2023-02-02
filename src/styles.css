@@ -3,3 +3,7 @@
 body {
   height: 100vh;
 }
+
+.form-control {
+  background-color: var(--bs-body-bg)!important;
+}
