@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
 import {NgForm} from "@angular/forms";
 import {User} from "../user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign',
@@ -14,7 +15,7 @@ export class SignComponent {
   error = false
   errorRegister = false
 
-  constructor(private authenticationService:AuthenticationService) {
+  constructor(private authenticationService:AuthenticationService, private router: Router) {
 
   }
 
@@ -34,6 +35,7 @@ export class SignComponent {
     if(this.register) {
       if (this.registerUser(user)) {
         this.loginUser(user);
+        this.router.navigate(['/'])
         return;
       }
       this.errorRegister= true
@@ -41,6 +43,7 @@ export class SignComponent {
     }
 
     if(this.loginUser(user)) {
+      this.router.navigate(['/'])
       return;
     }
     this.error= true
