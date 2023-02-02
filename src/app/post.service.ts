@@ -30,4 +30,8 @@ export class PostService {
   addPost(post: Post) {
     this.posts.push(post)
   }
+
+  getPosts(username: string) {
+    return this.posts.filter(post=> post.username == username)
+  }
 }
