@@ -8,6 +8,8 @@ export class AuthenticationService {
 
   private userLogged = false;
   private users:User[] = []
+  private username = ''
+
   constructor() { }
 
   isUserLogged() {
@@ -19,6 +21,7 @@ export class AuthenticationService {
     this.users.forEach(useri=> {
       if (useri.username == user.username && useri.password == useri.password) {
         this.userLogged = true;
+        this.username = useri.username
         return;
       }
     })
@@ -37,5 +40,11 @@ export class AuthenticationService {
     this.users.push(user)
     return true;
   }
+
+  getUsername() {
+    return this.username
+  }
+
+
 
 }

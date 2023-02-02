@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {PostService} from "../post.service";
 import {Post} from "../post";
+import {AuthenticationService} from "../authentication.service";
 
 @Component({
   selector: 'app-create',
@@ -9,9 +10,10 @@ import {Post} from "../post";
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent {
-  @Input('username') username=""
+  username = ""
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private authService: AuthenticationService) {
+    this.username = authService.getUsername()
   }
 
   onSubmit(f: NgForm) {
