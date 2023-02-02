@@ -3,6 +3,7 @@ import {NgForm} from "@angular/forms";
 import {PostService} from "../post.service";
 import {Post} from "../post";
 import {AuthenticationService} from "../authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create',
@@ -12,7 +13,7 @@ import {AuthenticationService} from "../authentication.service";
 export class CreateComponent {
   username = ""
 
-  constructor(private postService: PostService, private authService: AuthenticationService) {
+  constructor(private postService: PostService, private authService: AuthenticationService, private router: Router) {
     this.username = authService.getUsername()
   }
 
@@ -23,6 +24,7 @@ export class CreateComponent {
       username: this.username
     }
     this.postService.addPost(post)
+    this.router.navigate(['/posts/'+this.username])
   }
 
 }
