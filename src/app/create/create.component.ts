@@ -23,8 +23,9 @@ export class CreateComponent {
       post_text: f.value.post_text,
       username: this.username
     }
-    this.postService.addPost(post)
-    this.router.navigate(['/posts/'+this.username])
+    this.postService.addPost(post).subscribe(()=> {
+      this.router.navigate(['/posts/'+this.username])
+    })
   }
 
 }

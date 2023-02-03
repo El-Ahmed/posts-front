@@ -7,14 +7,13 @@ import {HttpClient} from "@angular/common/http";
 })
 export class PostService {
 
-  posts:Post[] = []
 
   constructor(private http: HttpClient) {
   }
 
 
   addPost(post: Post) {
-    this.posts.push(post)
+    return this.http.post('api/posts/',post)
   }
 
   getPosts(username: string) {
