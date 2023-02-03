@@ -33,31 +33,29 @@ export class SignComponent {
       }
 
     if(this.register) {
-      if (this.registerUser(user)) {
-        this.loginUser(user);
+      this.authenticationService.register(user).subscribe({
+        next:()=> {
+          this.authenticationService.login(user).subscribe({
+            next:()=> {
+              this.router.navigate(['/'])
+            }
+          })
+        },
+        error: ()=> {
+          this.errorRegister= true
+        }
+      });
+      return;
+    }
+
+    this.authenticationService.login(user).subscribe({
+      next:()=> {
         this.router.navigate(['/'])
-        return;
+      },
+      error:() => {
+        this.error= true
       }
-      this.errorRegister= true
-      return;
-    }
-
-    if(this.loginUser(user)) {
-      this.router.navigate(['/'])
-      return;
-    }
-    this.error= true
+    })
   }
-
-  registerUser(user: User) {
-    return this.authenticationService.register(user);
-
-  }
-  loginUser(user: User) {
-    return this.authenticationService.login(user);
-
-  }
-
-
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -7,38 +8,33 @@ import {User} from "./user";
 export class AuthenticationService {
 
   private userLogged = false;
-  private users:User[] = []
   private username = ''
 
-  constructor() { }
+  constructor( private http: HttpClient) { }
 
   isUserLogged() {
     return this.userLogged;
   }
 
   login(user: User) {
-
-    this.users.forEach(useri=> {
-      if (useri.username == user.username && useri.password == useri.password) {
-        this.userLogged = true;
-        this.username = useri.username
-        return;
+    const req = this.http.post('/api/user/login', user)
+    req.subscribe({
+      next: ()=> {
+        this.username = user.username
+        this.userLogged = true
       }
     })
-
-    return this.userLogged
+    return req
   }
 
   logout() {
-    this.userLogged = false;
+    this.http.get('/api/user/logout').subscribe(()=> {
+      this.userLogged = false;
+    })
   }
 
   register(user: User) {
-    if(this.users.some(useri=> useri.username === user.username)) {
-      return false;
-    }
-    this.users.push(user)
-    return true;
+    return this.http.post('/api/user/register',user)
   }
 
   getUsername() {
