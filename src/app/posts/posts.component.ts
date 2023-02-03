@@ -14,14 +14,15 @@ export class PostsComponent {
 
   constructor(private postService: PostService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe( paramMap => {
-      const username = paramMap.get('id');
+      let username = paramMap.get('id');
       if (username == null) {
-        this.posts = postService.posts;
+        username = ''
       }
-      else {
-        this.posts = postService.getPosts(username)
-      }
+      postService.getPosts(username).subscribe((posts:any)=>{
+        this.posts = posts
+      })
     })
   }
+
 
 }
