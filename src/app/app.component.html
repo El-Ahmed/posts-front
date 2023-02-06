@@ -10,7 +10,10 @@
 <!--<app-create username="ahmed"/>-->
 
 <app-header></app-header>
+<div class="scrolling-container" #scrollContainer (scroll)="onScroll($event) ">
+
 <div class="pt-5"></div>
 <div class="pt-5">
   <router-outlet></router-outlet>
+</div>
 </div>

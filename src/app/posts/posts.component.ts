@@ -14,6 +14,7 @@ export class PostsComponent {
 
   constructor(private postService: PostService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe( paramMap => {
+      this.posts = []
       let username = paramMap.get('id');
       if (username == null) {
         username = ''

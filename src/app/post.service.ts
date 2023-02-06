@@ -9,11 +9,12 @@ import {Observable, Subject} from "rxjs";
 export class PostService {
 
   posts: Subject<Post[]> = new Subject<Post[]>();
-  username = ""
+  username = '0'
+  offset = 0
 
   constructor(private http: HttpClient) {
-    this.initializePosts("").subscribe(posts => {
-      this.posts.next(posts)
+    this.posts.subscribe(posts=>{
+      this.offset += posts.length
     })
   }
 
@@ -24,9 +25,10 @@ export class PostService {
 
   getPosts(username: string): Subject<Post[]> {
     if (username != this.username) {
-      this.initializePosts("").subscribe(posts => {
+      this.initializePosts(username).subscribe(posts => {
         this.posts.next(posts)
       })
+      this.offset=0
       this.username = username
     }
 
@@ -37,9 +39,11 @@ export class PostService {
     return this.http.get('api/posts', {params:{username: username}}) as Observable<Post[]>
   }
   getMorePosts() {
-    this.initializePosts(this.username).subscribe(
-      posts => {
-        this.posts.next(posts);
+    if (this.offset == 0)
+      return
+    this.http.get('api/posts', {params:{username: this.username, offset: this.offset}}).subscribe(
+      (posts:any) => {
+        this.posts.next(posts)
       }
     )
   }
