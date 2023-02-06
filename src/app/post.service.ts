@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Post} from "./post";
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,14 @@ export class PostService {
 
   posts: Subject<Post[]> = new Subject<Post[]>();
   username = '0'
-  offset = 0
+  page = 0
+  last_post:Post = {post_date: "", post_text: "", username: ""}
 
   constructor(private http: HttpClient) {
-    this.posts.subscribe(posts=>{
-      this.offset += posts.length
+    this.posts.subscribe(posts=> {
+      this.last_post = posts[posts.length-1]
     })
+
   }
 
 
@@ -25,25 +27,24 @@ export class PostService {
 
   getPosts(username: string): Subject<Post[]> {
     if (username != this.username) {
-      this.initializePosts(username).subscribe(posts => {
-        this.posts.next(posts)
-      })
-      this.offset=0
+      this.username = username
+      this.getMorePosts()
+      this.page=0
       this.username = username
     }
 
     return this.posts
   }
 
-  initializePosts(username: string): Observable<Post[]>  {
-    return this.http.get('api/posts', {params:{username: username}}) as Observable<Post[]>
-  }
+
   getMorePosts() {
-    if (this.offset == 0)
-      return
-    this.http.get('api/posts', {params:{username: this.username, offset: this.offset}}).subscribe(
+    this.http.get('api/posts', {params:{username: this.username, offset: this.page*10}}).subscribe(
       (posts:any) => {
+        if (JSON.stringify(this.last_post) == JSON.stringify(posts[posts.length-1])) {
+          return
+        }
         this.posts.next(posts)
+        this.page++
       }
     )
   }
