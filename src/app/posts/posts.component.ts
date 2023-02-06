@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class PostsComponent {
 
-  posts:Post[] = []
+  posts:Post[] = [];
 
   constructor(private postService: PostService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe( paramMap => {
@@ -18,8 +18,8 @@ export class PostsComponent {
       if (username == null) {
         username = ''
       }
-      postService.getPosts(username).subscribe((posts:any)=>{
-        this.posts = posts
+      postService.getPosts(username).subscribe(posts=> {
+        this.posts.push(...posts)
       })
     })
   }
