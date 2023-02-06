@@ -11,7 +11,7 @@ export class PostService {
   posts: Subject<Post[]> = new Subject<Post[]>();
   username = '0'
   page = 0
-  last_post:Post = {post_date: "", post_text: "", username: ""}
+  last_post?:Post;
 
   constructor(private http: HttpClient) {
     this.posts.subscribe(posts=> {
@@ -26,12 +26,10 @@ export class PostService {
   }
 
   getPosts(username: string): Subject<Post[]> {
-    if (username != this.username) {
-      this.username = username
-      this.getMorePosts()
-      this.page=0
-      this.username = username
-    }
+    this.username = username
+    this.page=0
+    this.last_post = undefined
+    this.getMorePosts()
 
     return this.posts
   }
